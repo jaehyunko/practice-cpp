@@ -10,7 +10,7 @@ namespace jh
 
 	SinglyLinkedList::~SinglyLinkedList()
 	{
-		Node_t* node = mHead;
+		SinglyLinkedListNode* node = mHead;
 
 		while (node)
 		{
@@ -22,14 +22,14 @@ namespace jh
 
 	void SinglyLinkedList::Append(int data)
 	{
-		Node_t** it = &mHead;
+		SinglyLinkedListNode** it = &mHead;
 
 		while (*it)
 		{
 			it = &(*it)->next;
 		}
 
-		*it = new Node_t;
+		*it = new SinglyLinkedListNode;
 		(*it)->data = data;
 		(*it)->next = nullptr;
 
@@ -38,7 +38,7 @@ namespace jh
 
 	void SinglyLinkedList::Remove(int data)
 	{
-		Node_t** it = &mHead;
+		SinglyLinkedListNode** it = &mHead;
 
 		while (*it && (*it)->data != data)
 		{
@@ -50,7 +50,7 @@ namespace jh
 			return;
 		}
 
-		Node_t* node = *it;
+		SinglyLinkedListNode* node = *it;
 
 		*it = node->next;
 
@@ -72,7 +72,7 @@ namespace jh
 	std::vector<int> SinglyLinkedList::ToVector() const
 	{
 		std::vector<int> res;
-		Node_t* node = mHead;
+		SinglyLinkedListNode* node = mHead;
 
 		res.reserve(mSize);
 

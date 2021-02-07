@@ -4,11 +4,11 @@
 
 namespace jh
 {
-	typedef struct Node
+	typedef struct SinglyLinkedListNode
 	{
 		int data;
-		struct Node* next;
-	} Node_t;
+		struct SinglyLinkedListNode* next;
+	} SinglyLinkedListNode;
 
 	class SinglyLinkedList
 	{
@@ -21,7 +21,7 @@ namespace jh
 		size_t Size() const;
 		std::vector<int> ToVector() const;
 	private:
-		Node_t* mHead;
+		SinglyLinkedListNode* mHead;
 		size_t mSize;
 	};
 }
