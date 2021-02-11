@@ -1,10 +1,8 @@
 #include <cassert>
 #include "SinglyLinkedlist.h"
 
-int main()
+void test1()
 {
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
 	jh::SinglyLinkedList<int>* list = new jh::SinglyLinkedList<int>();
 
 	assert(list->Size() == 0);
@@ -52,6 +50,50 @@ int main()
 	list->Append(1);
 
 	delete list;
+}
+
+void test_copy_constructor()
+{
+	jh::SinglyLinkedList<int>* list1 = new jh::SinglyLinkedList<int>();
+
+	list1->Append(1);
+	list1->Append(2);
+
+	jh::SinglyLinkedList<int>* list2 = new jh::SinglyLinkedList<int>(*list1);
+
+	delete list1;
+	delete list2;
+}
+
+void test_assign_operator()
+{
+	jh::SinglyLinkedList<int>* list1 = new jh::SinglyLinkedList<int>();
+
+	list1->Append(1);
+	list1->Append(2);
+	list1->Append(3);
+
+	jh::SinglyLinkedList<int>* list2 = new jh::SinglyLinkedList<int>();
+
+	list2->Append(4);
+	list2->Append(5);
+	list2->Append(6);
+
+	list2->Remove(5);
+
+	*list2 = *list1;
+
+	delete list1;
+	delete list2;
+}
+
+int main()
+{
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+	test1();
+	test_copy_constructor();	
+	test_assign_operator();
 
 	return 0;
 }

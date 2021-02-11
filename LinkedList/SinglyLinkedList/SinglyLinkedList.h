@@ -16,7 +16,10 @@ namespace jh
 	{
 	public:
 		SinglyLinkedList();
+		SinglyLinkedList(const SinglyLinkedList<T>& other);
 		~SinglyLinkedList();
+
+		SinglyLinkedList<T>& operator=(const SinglyLinkedList<T>& rhs);
 
 		void Append(T data);
 		void Remove(T data);
@@ -35,6 +38,21 @@ namespace jh
 	}
 
 	template <typename T>
+	SinglyLinkedList<T>::SinglyLinkedList(const SinglyLinkedList<T>& other)
+		: mSize(other.mSize)
+	{
+		SinglyLinkedListNode<T>** nodePtr = &mHead;
+		SinglyLinkedListNode<T>* otherNode = other.mHead;
+
+		while (otherNode)
+		{
+			*nodePtr = new SinglyLinkedListNode<T>{ otherNode->data, nullptr };
+			nodePtr = &(*nodePtr)->next;
+			otherNode = otherNode->next;
+		}
+	}
+
+	template <typename T>
 	SinglyLinkedList<T>::~SinglyLinkedList()
 	{
 		SinglyLinkedListNode<T>* node = mHead;
@@ -45,6 +63,38 @@ namespace jh
 			delete node;
 			node = mHead;
 		}
+	}
+
+	template <typename T>
+	SinglyLinkedList<T>& SinglyLinkedList<T>::operator=(const SinglyLinkedList<T>& rhs)
+	{
+		if (this == &rhs)
+		{
+			return *this;
+		}
+
+		SinglyLinkedListNode<T>* node = mHead;
+
+		while (node)
+		{
+			mHead = node->next;
+			delete node;
+			node = mHead;
+		}
+
+		mSize = rhs.mSize;
+
+		SinglyLinkedListNode<T>** nodePtr = &mHead;
+		SinglyLinkedListNode<T>* rhsNode = rhs.mHead;
+
+		while (rhsNode)
+		{
+			*nodePtr = new SinglyLinkedListNode<T>{ rhsNode->data, nullptr };
+			nodePtr = &(*nodePtr)->next;
+			rhsNode = rhsNode->next;
+		}
+
+		return *this;
 	}
 
 	template <typename T>
