@@ -1,11 +1,11 @@
-#include <cassert>>
+#include <cassert>
 #include "SinglyLinkedlist.h"
 
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	jh::SinglyLinkedList* list = new jh::SinglyLinkedList();
+	jh::SinglyLinkedList<int>* list = new jh::SinglyLinkedList<int>();
 
 	assert(list->Size() == 0);
 
