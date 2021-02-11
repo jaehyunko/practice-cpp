@@ -1,7 +1,7 @@
 #include <cassert>
 #include "SinglyLinkedlist.h"
 
-void test1()
+void TestSinglyLinkedList()
 {
 	jh::SinglyLinkedList<int>* list = new jh::SinglyLinkedList<int>();
 
@@ -52,7 +52,7 @@ void test1()
 	delete list;
 }
 
-void test_copy_constructor()
+void TestSinglyLinkedListCopyConstructor()
 {
 	jh::SinglyLinkedList<int>* list1 = new jh::SinglyLinkedList<int>();
 
@@ -65,7 +65,7 @@ void test_copy_constructor()
 	delete list2;
 }
 
-void test_assign_operator()
+void TestSinglyLinkedListAssignOperator()
 {
 	jh::SinglyLinkedList<int>* list1 = new jh::SinglyLinkedList<int>();
 
@@ -91,9 +91,9 @@ int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	test1();
-	test_copy_constructor();	
-	test_assign_operator();
+	TestSinglyLinkedList();
+	TestSinglyLinkedListCopyConstructor();	
+	TestSinglyLinkedListAssignOperator();
 
 	return 0;
 }
