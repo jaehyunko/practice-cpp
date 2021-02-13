@@ -137,12 +137,63 @@ void TestBubbleSortStable()
 	}
 }
 
+bool CustomCompareAsc(const int& a, const int& b)
+{
+	return a < b;
+}
+
+bool CustomCompareDesc(const int& a, const int& b)
+{
+	return a > b;
+}
+
+void TestBubbleSortCustomCompare()
+{
+	const std::vector<int> expectedAsc({ 1, 2, 3, 4, 5 });
+	const std::vector<int> expectedDesc({ 5, 4, 3, 2, 1 });
+
+	std::vector<int> arr1({ 1, 2, 3, 4, 5 });
+
+	jh::BubbleSort(arr1, CustomCompareAsc);
+
+	for (size_t i = 0; i < expectedAsc.size(); ++i)
+	{
+		assert(expectedAsc[i] == arr1[i]);
+	}
+
+	jh::BubbleSort(arr1, CustomCompareDesc);
+
+	for (size_t i = 0; i < expectedDesc.size(); ++i)
+	{
+		assert(expectedDesc[i] == arr1[i]);
+	}
+
+	std::vector<int> arr2({ 5, 4, 3, 2, 1 });
+
+	jh::BubbleSort(arr2);
+
+	jh::BubbleSort(arr2, CustomCompareAsc);
+
+	for (size_t i = 0; i < expectedAsc.size(); ++i)
+	{
+		assert(expectedAsc[i] == arr2[i]);
+	}
+
+	jh::BubbleSort(arr2, CustomCompareDesc);
+
+	for (size_t i = 0; i < expectedDesc.size(); ++i)
+	{
+		assert(expectedDesc[i] == arr2[i]);
+	}
+}
+
 int main()
 {
 	TestBubbleSortIntArray();
 	TestBubbleSortEmptyArray();
 	TestBubbleSortCharArray();
 	TestBubbleSortStable();
+	TestBubbleSortCustomCompare();
 
 	return 0;
 }
