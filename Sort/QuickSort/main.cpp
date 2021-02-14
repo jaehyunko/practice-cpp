@@ -1,6 +1,9 @@
 #include <algorithm>
 #include <cassert>
+#include <chrono>
 #include <cstdlib>
+#include <iostream>
+#include <limits>
 #include <vector>
 #include "QuickSort.h"
 
@@ -152,24 +155,31 @@ void TestQuickSortEvenDupElements(void (*quickSort)(std::vector<int>&))
 
 void TestQuickSortRandomElements(void (*quickSort)(std::vector<int>&))
 {
-	const size_t MAX_ELEMENT_COUNT = 10000;
-	const size_t TEST_COUNT = 100;
+	const size_t TEST_COUNT = 10;
 
 	for (size_t t = 0; t < TEST_COUNT; ++t)
 	{
-		size_t elementCount = rand() % MAX_ELEMENT_COUNT;
-
 		std::vector<int> arr;
 
-		for (size_t i = 0; i < elementCount; ++i)
+		for (size_t i = 0; i < (t + 1) * 1000000; ++i)
 		{
-			arr.push_back(rand() % MAX_ELEMENT_COUNT);
+			arr.push_back(rand() % std::numeric_limits<size_t>::max());
 		}
 
-		std::vector<int> expected(arr);
-		std::sort(expected.begin(), expected.end());
+		std::chrono::steady_clock::time_point begin;
+		std::chrono::steady_clock::time_point end;
 
+		std::vector<int> expected(arr);
+
+		begin = std::chrono::steady_clock::now();
+		std::sort(expected.begin(), expected.end());
+		end = std::chrono::steady_clock::now();
+		std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << ", ";
+
+		begin = std::chrono::steady_clock::now();
 		quickSort(arr);
+		end = std::chrono::steady_clock::now();
+		std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << std::endl;
 
 		for (size_t i = 0; i < expected.size(); ++i)
 		{
@@ -180,6 +190,8 @@ void TestQuickSortRandomElements(void (*quickSort)(std::vector<int>&))
 
 int main()
 {
+	std::cout << "recursive" << std::endl;
+
 	TestQuickSortEmpty(jh::QuickSortRecursive);
 	TestQuickSortAnElement(jh::QuickSortRecursive);
 	TestQuickSortTwoElements(jh::QuickSortRecursive);
@@ -188,6 +200,8 @@ int main()
 	TestQuickSortEvenElements(jh::QuickSortRecursive);
 	TestQuickSortEvenDupElements(jh::QuickSortRecursive);
 	TestQuickSortRandomElements(jh::QuickSortRecursive);
+
+	std::cout << "iterative" << std::endl;
 
 	TestQuickSortEmpty(jh::QuickSortIterative);
 	TestQuickSortAnElement(jh::QuickSortIterative);
