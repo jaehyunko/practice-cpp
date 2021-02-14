@@ -4,30 +4,30 @@
 #include <vector>
 #include "QuickSort.h"
 
-void TestQuickSortRecursiveEmpty()
+void TestQuickSortEmpty(void (*quickSort)(std::vector<int>&))
 {
 	std::vector<int> v;
 
-	jh::QuickSortRecursive(v);
+	quickSort(v);
 
 	assert(v.size() == 0);
 }
 
-void TestQuickSortRecursiveAnElement()
+void TestQuickSortAnElement(void (*quickSort)(std::vector<int>&))
 {
 	std::vector<int> v({ 1 });
 
-	jh::QuickSortRecursive(v);
+	quickSort(v);
 
 	assert(v.size() == 1);
 	assert(v[0] == 1);
 }
 
-void TestQuickSortRecursiveTwoElements()
+void TestQuickSortTwoElements(void (*quickSort)(std::vector<int>&))
 {
 	std::vector<int> v1({ 1, 2 });
 
-	jh::QuickSortRecursive(v1);
+	quickSort(v1);
 
 	assert(v1.size() == 2);
 	assert(v1[0] == 1);
@@ -35,7 +35,7 @@ void TestQuickSortRecursiveTwoElements()
 
 	std::vector<int> v2({ 1, 1 });
 
-	jh::QuickSortRecursive(v2);
+	quickSort(v2);
 
 	assert(v2.size() == 2);
 	assert(v2[0] == 1);
@@ -43,14 +43,14 @@ void TestQuickSortRecursiveTwoElements()
 
 	std::vector<int> v3({ 2, 1 });
 
-	jh::QuickSortRecursive(v3);
+	quickSort(v3);
 
 	assert(v3.size() == 2);
 	assert(v3[0] == 1);
 	assert(v3[1] == 2);
 }
 
-void TestQuickSortRecursiveOddElements()
+void TestQuickSortOddElements(void (*quickSort)(std::vector<int>&))
 {
 	std::vector<int> expected({ 1, 2, 3, 4, 5 });
 
@@ -67,7 +67,7 @@ void TestQuickSortRecursiveOddElements()
 
 	for (auto input : inputs)
 	{
-		jh::QuickSortRecursive(input);
+		quickSort(input);
 		for (size_t i = 0; i < expected.size(); ++i)
 		{
 			assert(expected[i] == input[i]);
@@ -75,7 +75,7 @@ void TestQuickSortRecursiveOddElements()
 	}
 }
 
-void TestQuickSortRecursiveOddDupElements()
+void TestQuickSortOddDupElements(void (*quickSort)(std::vector<int>&))
 {
 	std::vector<int> expected({ 1, 2, 2, 4, 5 });
 
@@ -92,7 +92,7 @@ void TestQuickSortRecursiveOddDupElements()
 
 	for (auto input : inputs)
 	{
-		jh::QuickSortRecursive(input);
+		quickSort(input);
 		for (size_t i = 0; i < expected.size(); ++i)
 		{
 			assert(expected[i] == input[i]);
@@ -100,7 +100,7 @@ void TestQuickSortRecursiveOddDupElements()
 	}
 }
 
-void TestQuickSortRecursiveEvenElements()
+void TestQuickSortEvenElements(void (*quickSort)(std::vector<int>&))
 {
 	std::vector<int> expected({ 1, 2, 3, 4, 5, 6 });
 
@@ -117,7 +117,7 @@ void TestQuickSortRecursiveEvenElements()
 
 	for (auto input : inputs)
 	{
-		jh::QuickSortRecursive(input);
+		quickSort(input);
 		for (size_t i = 0; i < expected.size(); ++i)
 		{
 			assert(expected[i] == input[i]);
@@ -125,7 +125,7 @@ void TestQuickSortRecursiveEvenElements()
 	}
 }
 
-void TestQuickSortRecursiveEvenDupElements()
+void TestQuickSortEvenDupElements(void (*quickSort)(std::vector<int>&))
 {
 	std::vector<int> expected({ 1, 2, 3, 3, 5, 6 });
 
@@ -142,7 +142,7 @@ void TestQuickSortRecursiveEvenDupElements()
 
 	for (auto input : inputs)
 	{
-		jh::QuickSortRecursive(input);
+		quickSort(input);
 		for (size_t i = 0; i < expected.size(); ++i)
 		{
 			assert(expected[i] == input[i]);
@@ -150,7 +150,7 @@ void TestQuickSortRecursiveEvenDupElements()
 	}
 }
 
-void TestQuickSortRecursiveRandomElements()
+void TestQuickSortRandomElements(void (*quickSort)(std::vector<int>&))
 {
 	const size_t MAX_ELEMENT_COUNT = 10000;
 	const size_t TEST_COUNT = 100;
@@ -169,7 +169,7 @@ void TestQuickSortRecursiveRandomElements()
 		std::vector<int> expected(arr);
 		std::sort(expected.begin(), expected.end());
 
-		jh::QuickSortRecursive(arr);
+		quickSort(arr);
 
 		for (size_t i = 0; i < expected.size(); ++i)
 		{
@@ -180,14 +180,23 @@ void TestQuickSortRecursiveRandomElements()
 
 int main()
 {
-	TestQuickSortRecursiveEmpty();
-	TestQuickSortRecursiveAnElement();
-	TestQuickSortRecursiveTwoElements();
-	TestQuickSortRecursiveOddElements();
-	TestQuickSortRecursiveOddDupElements();
-	TestQuickSortRecursiveEvenElements();
-	TestQuickSortRecursiveEvenDupElements();
-	TestQuickSortRecursiveRandomElements();
+	TestQuickSortEmpty(jh::QuickSortRecursive);
+	TestQuickSortAnElement(jh::QuickSortRecursive);
+	TestQuickSortTwoElements(jh::QuickSortRecursive);
+	TestQuickSortOddElements(jh::QuickSortRecursive);
+	TestQuickSortOddDupElements(jh::QuickSortRecursive);
+	TestQuickSortEvenElements(jh::QuickSortRecursive);
+	TestQuickSortEvenDupElements(jh::QuickSortRecursive);
+	TestQuickSortRandomElements(jh::QuickSortRecursive);
+
+	TestQuickSortEmpty(jh::QuickSortIterative);
+	TestQuickSortAnElement(jh::QuickSortIterative);
+	TestQuickSortTwoElements(jh::QuickSortIterative);
+	TestQuickSortOddElements(jh::QuickSortIterative);
+	TestQuickSortOddDupElements(jh::QuickSortIterative);
+	TestQuickSortEvenElements(jh::QuickSortIterative);
+	TestQuickSortEvenDupElements(jh::QuickSortIterative);
+	TestQuickSortRandomElements(jh::QuickSortIterative);
 
 	return 0;
 }
